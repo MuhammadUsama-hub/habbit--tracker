@@ -1,11 +1,15 @@
 import mongoose,{ Schema, Document } from 'mongoose';
 
+
 // Define an interface for the User document
 interface IUser extends Document {
-    userName:string;
-    name: string;
-    email: string;
-    password: string;
+    userName:string,
+    name: string,
+    email: string,
+    password: string,
+    verifyCode:string,
+    verifyCodeExpiry:Date,
+    isVerified:boolean,
 }
 
 // Define the User schema
@@ -27,13 +31,28 @@ const userSchema :Schema<IUser>= new Schema({
         unique: true,
         trim: true,
         lowercase: true,
-        match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,'invalid Email']  // Regex to validate email format
+        match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,'invalid Email'],  // Regex to validate email format
     },
     password: {
         type: String,
         required: [true,'password is Required'],
         match:[/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,'invalid password'],  // Regex to enforce password rules: min 8 chars, at least one letter and one number
     },
+    verifyCode:{
+        type: String,
+        trim:true,
+        required:[true,'Verify code is required'],
+
+    },
+    verifyCodeExpiry:{
+        type:Date,
+        required:[true,'verify expiry is required'],    
+
+    },
+    isVerified:{
+        type:Boolean,
+        default:false,
+    }
 }, {
     timestamps: true,
 });
