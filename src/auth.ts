@@ -13,7 +13,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: {},
       },
       authorize: async (credentials) : Promise<any>=> {
-        await dbConnect()
+        // src/auth.ts
+        if (typeof window === 'undefined') {
+            const { dbConnect } = await import('./lib/dbConnect'); // Import dynamically only on the server
+            await dbConnect();
+              }
+
         try {
             const user = await User.findOne({userName:credentials.username})
             if(!user){

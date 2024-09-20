@@ -1,4 +1,4 @@
-'use server'
+
 import mongoose from "mongoose";
 interface ConnectionObject{
     isConnected?:number
