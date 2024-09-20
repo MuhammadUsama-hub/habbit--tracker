@@ -1,4 +1,4 @@
-
+'use server'
 import Image from "next/image";
 import { auth } from "@/auth";
 import { doLogout } from "../actions";
