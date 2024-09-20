@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const loginSchema = z.object({
-  userName: z
+  username: z
     .string()
     .trim()
     .regex(/^[a-zA-Z0-9_]{3,8}$/, { message: "incorrect username format" }),
