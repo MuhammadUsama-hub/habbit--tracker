@@ -24,7 +24,7 @@ export async function doCredentialLogin(user:UserInfo) {
 
   export async function doSocialLogin(formData:FormData) {
     const action = formData.get('action')
-    await signIn(action?.toString(), { redirectTo: "/Dashboard" });
+    await signIn(action?.toString(), { redirectTo: "/dashboard" });
 }
 
 

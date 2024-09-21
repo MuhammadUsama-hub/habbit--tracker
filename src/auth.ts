@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials"
 import bcrypt from 'bcryptjs'
 import User from "./models/Users"
 import { dbConnect } from "./lib/dbConnect"
+import GitHub from "next-auth/providers/github"
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
@@ -14,11 +15,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       authorize: async (credentials) : Promise<any>=> {
         // src/auth.ts
-        if (typeof window === 'undefined') {
-            const { dbConnect } = await import('./lib/dbConnect'); // Import dynamically only on the server
-            await dbConnect();
-              }
-
+        await dbConnect();
         try {
             const user = await User.findOne({userName:credentials.username})
             if(!user){
@@ -46,7 +43,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       },
     }),
-  ],
+  GitHub],
   session:{
     strategy:'jwt'
   },
